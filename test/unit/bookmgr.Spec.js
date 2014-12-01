@@ -12,6 +12,19 @@ describe("Book Management Controller Unit testing", function () {
     controller = $controller("bookmgr", {
       $scope: mockScope
     });
+
+    mockScope.books = [
+      { id: '3455f5af-db4b-49a8-8222-0d8fa6b6d9d3', title: "Book1", 
+          category: "Programming Language", price: 1.25 },
+      { id: '18c83bc3-9607-4f26-8281-cb360afb41bc', title: "Book2", 
+          category: "Programming Language", price: 2.45 },
+      { id: '552b3ca5-cd81-40e7-97c6-3bcd2a3bec17', title: "Book3", 
+          category: "Programming Language", price: 4.25 },
+      { id: 'e48f724a-f332-4a6d-be37-e21d9a94db89', title: "Book4", 
+          category: "Programming Language", price: 3.15 },
+      { id: '607b0ff8-2222-4c64-8f45-62c85b70b2f5', title: "Book5", 
+          category: "Programming Language", price: 4.25 }
+    ];
   }));
 
   it('assert the initial states of controller', function() {
@@ -59,15 +72,16 @@ describe("Book Management Controller Unit testing", function () {
   });
 
   it('call loadEditForm() with a valid book', function() {
-    var book = { id: '552b3ca5-cd81-40e7-97c6-3bcd2a3bec17', title: "Book3", 
-          category: "Programming Language", price: 4.25 };
-
+    var book = new Object(mockScope.books[2]);
+    
     mockScope.loadEditForm(book);
 
     expect(mockScope.displayMode).toEqual("edit");
     expect(mockScope.currentBook).not.toBeNull();
-    expect(mockScope.currentBook.id).toEqual('552b3ca5-cd81-40e7-97c6-3bcd2a3bec17');
-    expect(mockScope.currentBook.title).toEqual("Book3");
+    expect(mockScope.currentBook.id).toEqual(book.id);
+    expect(mockScope.currentBook.title).toEqual(book.title);
+    expect(mockScope.currentBook.category).toEqual(book.category);
+    expect(mockScope.currentBook.price).toEqual(book.price);
   });
 
   it('call cancelEditForm() to comeback to list', function() {
@@ -79,8 +93,7 @@ describe("Book Management Controller Unit testing", function () {
   });
 
   it('call saveEditForm() with defined ID', function() {
-    var book = { id: 'e48f724a-f332-4a6d-be37-e21d9a94db89', title: "Book4", 
-          category: "Programming Language", price: 3.15 };
+    var book = new Object(mockScope.books[3]);
 
     spyOn(mockScope, 'createBook');
     spyOn(mockScope, 'updateBook');
