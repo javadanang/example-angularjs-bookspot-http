@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html ng-app="bookspot">
+<head>
+    <title>Books</title>
+    <link href="lib/bootstrap/bootstrap.css" rel="stylesheet" />
+    <link href="lib/bootstrap/bootstrap-theme.css" rel="stylesheet" />
+    <script src="lib/angular/angular.js"></script>
+    <script src="js/bookmgr.js"></script>
+</head>
+<body ng-controller="bookmgr">
+    <div class="panel panel-primary">
+        <h3 class="panel-heading">Books</h3>
+        <ng-include src="'list-form.html'" ng-show="displayMode == 'list'"></ng-include>
+        <ng-include src="'edit-form.html'" ng-show="displayMode == 'edit'"></ng-include>
+    </div>
+</body>
+</html>
