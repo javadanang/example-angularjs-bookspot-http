@@ -108,12 +108,20 @@ describe("Book Management Controller Unit testing", function () {
   it('call createBook() to new edit form', function() {
     var totalBooks = mockScope.books.length;
 
-    var book = { id: 'e2dadcfe-dca7-456a-adf3-ec199e811c40', name: "Book6", 
+    var iBook = { name: "Book6", 
         category: "Programming Language", price: 3.15 };
 
-    mockScope.createBook(book);
+    var oBook = new Object(iBook);
+    oBook.id = 'e2dadcfe-dca7-456a-adf3-ec199e811c40';
+
+    $httpBackend.expectPOST(baseUrl, iBook).respond(200, oBook);
+
+    mockScope.createBook(iBook);
+
+    $httpBackend.flush();
 
     expect(mockScope.books.length).toEqual(totalBooks + 1);
+    expect(mockScope.books[totalBooks]).toEqual(oBook);
     expect(mockScope.displayMode).toEqual("list");
   });
 
