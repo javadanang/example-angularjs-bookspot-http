@@ -128,17 +128,23 @@ describe("Book Management Controller Unit testing", function () {
   it('call updateBook() to save edit form', function() {
     var totalBooks = mockScope.books.length;
 
-    var book = { id: '552b3ca5-cd81-40e7-97c6-3bcd2a3bec17', 
-          title: "Book3 (New)", 
-          category: "Programming Language", price: 6.75 };
+    var iBook = new Object(mockScope.books[2]);
+    iBook.title = "Book3 (New)";
+    iBook.price = 6.75; 
 
-    mockScope.updateBook(book);
+    var oBook = new Object(iBook);
+
+    $httpBackend.expectPUT(baseUrl + iBook.id, iBook).respond(200, oBook);
+
+    mockScope.updateBook(iBook);
+
+    $httpBackend.flush();
 
     expect(mockScope.books.length).toEqual(totalBooks);
     expect(mockScope.displayMode).toEqual("list");
 
-    expect(mockScope.books[2].title).toEqual("Book3 (New)");
-    expect(mockScope.books[2].price).toEqual(6.75);
+    expect(mockScope.books[2].title).toEqual(oBook.title);
+    expect(mockScope.books[2].price).toEqual(oBook.price);
   });
 
   it('call deleteBook() to remove book', function() {
