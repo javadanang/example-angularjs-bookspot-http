@@ -150,12 +150,19 @@ describe("Book Management Controller Unit testing", function () {
   it('call deleteBook() to remove book', function() {
     var totalBooks = mockScope.books.length;
 
-    var book = { id: 'e48f724a-f332-4a6d-be37-e21d9a94db89', title: "Book4", 
-          category: "Programming Language", price: 3.15 };
+    var book = new Object(mockScope.books[3]);
+
+    $httpBackend.expectDELETE(baseUrl + book.id).respond(200, 'Ok');
 
     mockScope.deleteBook(book);
 
+    $httpBackend.flush();
+
     expect(mockScope.displayMode).toEqual("list");
     expect(mockScope.books.length).toEqual(totalBooks - 1);
+
+    for(var i=0; i<mockScope.books.length; i++) {
+      expect(mockScope.books[i].id).not.toEqual(book.id);
+    }
   });
 });
