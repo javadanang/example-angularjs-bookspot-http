@@ -20,7 +20,9 @@ app.controller('bookmgr', ['$scope', '$http', 'baseUrl',
   ];
 
   $scope.listBooks = function () {
-    return $scope.books;
+    $http.get(baseUrl).success(function (data) {
+      $scope.books = data;
+    });
   }
 
   $scope.loadEditForm = function (book) {
