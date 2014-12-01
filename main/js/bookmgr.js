@@ -64,7 +64,9 @@ app.controller('bookmgr', ['$scope', '$http', 'baseUrl',
   }
   
   $scope.deleteBook = function (book) {
-    $scope.books.splice($scope.books.indexOf(book), 1);
+    $http.delete(baseUrl + book.id).success(function () {
+      $scope.books.splice($scope.books.indexOf(book), 1);
+    });
   }
 
   var generateUUID = function(){
