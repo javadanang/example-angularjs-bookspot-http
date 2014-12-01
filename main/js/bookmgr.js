@@ -44,9 +44,10 @@ app.controller('bookmgr', ['$scope', '$http', 'baseUrl',
   }
 
   $scope.createBook = function (book) {
-    book.id = generateUUID();
-    $scope.books.push(book);
-    $scope.displayMode = "list";
+    $http.post(baseUrl, book).success(function (newBook) {
+      $scope.books.push(newBook);
+      $scope.displayMode = "list";
+    });
   }
 
   $scope.updateBook = function (book) {
