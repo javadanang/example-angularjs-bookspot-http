@@ -51,13 +51,16 @@ app.controller('bookmgr', ['$scope', '$http', 'baseUrl',
   }
 
   $scope.updateBook = function (book) {
-    for (var i = 0; i < $scope.books.length; i++) {
-      if ($scope.books[i].id == book.id) {
-        $scope.books[i] = book;
-        break;
+    $http.put(baseUrl + book.id, book)
+        .success(function (returnedBook) {
+      for (var i = 0; i < $scope.books.length; i++) {
+        if ($scope.books[i].id == returnedBook.id) {
+          $scope.books[i] = returnedBook;
+          break;
+        }
       }
-    }
-    $scope.displayMode = "list";
+      $scope.displayMode = "list";
+    });
   }
   
   $scope.deleteBook = function (book) {
